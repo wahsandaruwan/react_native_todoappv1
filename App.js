@@ -50,6 +50,7 @@ export default function App() {
   // Function for adding todos
   const addTodo = () => {
     if (textInput) {
+      // Construct new todo object
       const newTodo = {
         id: Math.random(),
         task: textInput,
@@ -61,6 +62,20 @@ export default function App() {
     else {
       Alert.alert("Error", "Please enter a todo!")
     }
+  }
+
+  // Function for toggle todo complete
+  const toggleTodoComplete = (todoId) => {
+    const newTodos = todos.map((item) => {
+      // toggle
+      if (item.id === todoId) {
+        return { ...item, completed: !item.completed }
+      }
+      return item
+    })
+
+    // Set new todos
+    setTodos(newTodos)
   }
 
   return (
