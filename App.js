@@ -10,7 +10,7 @@ import Icon from "react-native-vector-icons/MaterialIcons"
 const COLORS = { primary: "#2ecc71", white: "#ffffff", red: "#e74c3c", dark: "#2c3e50" }
 
 export default function App() {
-  // Todo data
+  // Data of todos
   const [todos, setTodos] = useState([
     { id: 1, task: "First Todo", completed: true },
     { id: 2, task: "Second Todo", completed: false },
