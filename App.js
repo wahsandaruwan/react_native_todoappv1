@@ -20,13 +20,13 @@ export default function App() {
   const [todos, setTodos] = useState([])
 
   // Retrieve todos from device
-  useState(() => {
+  useEffect(() => {
     retrieveTodosFromPhone()
   }, [])
 
   // Save todos to device
   useEffect(() => {
-    saveTodosToPhone()
+    saveTodosToPhone(todos)
   }, [todos])
 
   // Custom ListItem component
@@ -119,7 +119,7 @@ export default function App() {
   const saveTodosToPhone = async (todos) => {
     try {
       // Save todos
-      const stringifyTodos = JSON.stringify(value)
+      const stringifyTodos = JSON.stringify(todos)
       await AsyncStorage.setItem("todos", stringifyTodos)
     } catch (e) {
       console.log(e)
