@@ -19,7 +19,12 @@ export default function App() {
   // List of todos
   const [todos, setTodos] = useState([])
 
-  // Save todos in device
+  // Retrieve todos from device
+  useState(() => {
+    retrieveTodosFromPhone()
+  }, [])
+
+  // Save todos to device
   useEffect(() => {
     saveTodosToPhone()
   }, [todos])
@@ -113,8 +118,22 @@ export default function App() {
   // Save todos to user's device
   const saveTodosToPhone = async (todos) => {
     try {
+      // Save todos
       const stringifyTodos = JSON.stringify(value)
-      await AsyncStorage.setItem("@Storage_Key", stringifyTodos)
+      await AsyncStorage.setItem("todos", stringifyTodos)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  // Retrieve todos from the device
+  const retrieveTodosFromPhone = async () => {
+    try {
+      // Retrieve todos
+      const todos = await AsyncStorage.getItem("todos")
+      if (todos != null) {
+        setTodos(JSON.parse(todos))
+      }
     } catch (e) {
       console.log(e)
     }
