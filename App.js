@@ -104,15 +104,17 @@ export default function App() {
 
   // Function for deleting all todos
   const deleteAllTodos = () => {
-    Alert.alert("Confirm", "Clear Todos", [
-      {
-        text: "Yes",
-        onPress: () => setTodos([])
-      },
-      {
-        text: "No"
-      }
-    ])
+    if (todos.length != 0) {
+      Alert.alert("Confirm", "Clear Todos", [
+        {
+          text: "Yes",
+          onPress: () => setTodos([])
+        },
+        {
+          text: "No"
+        }
+      ])
+    }
   }
 
   // Save todos to user's device
