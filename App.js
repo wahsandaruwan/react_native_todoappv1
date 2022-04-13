@@ -1,7 +1,7 @@
 // Inbuilt components
-import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
+import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, FlatList, Alert } from "react-native";
 
 // Third-party icons
 import Icon from "react-native-vector-icons/MaterialIcons"
@@ -10,7 +10,10 @@ import Icon from "react-native-vector-icons/MaterialIcons"
 const COLORS = { primary: "#2ecc71", white: "#ffffff", red: "#e74c3c", dark: "#2c3e50" }
 
 export default function App() {
-  // Data of todos
+  // Single todo data
+  const [textInput, setTextInput] = useState("")
+
+  // List of todos
   const [todos, setTodos] = useState([
     { id: 1, task: "First Todo", completed: true },
     { id: 2, task: "Second Todo", completed: false },
@@ -26,33 +29,50 @@ export default function App() {
             {
               fontSize: 15,
               color: COLORS.dark,
-              textDecorationLine: todo?.completed ? 'line-through' : 'none'
+              textDecorationLine: todo?.completed ? "line-through" : "none"
             }
           }>{todo?.task}</Text>
         </View>
-        <TouchableOpacity style={[styles.actionIcon]}>
+        <TouchableOpacity style={[styles.actionIcon]} onPress={() => toggleTodoComplete(todo?.id)}>
           {
             todo?.completed && (
-              <Icon name='done' size={20} color={COLORS.white} />
+              <Icon name="done" size={20} color={COLORS.white} />
             )
           }
         </TouchableOpacity>
         <TouchableOpacity style={[styles.actionIcon, { backgroundColor: COLORS.red }]}>
-          <Icon name='delete' size={20} color={COLORS.white} />
+          <Icon name="delete" size={20} color={COLORS.white} />
         </TouchableOpacity>
       </View >
     )
   }
+
+  // Function for adding todos
+  const addTodo = () => {
+    if (textInput) {
+      const newTodo = {
+        id: Math.random(),
+        task: textInput,
+        completed: false
+      }
+      setTodos([...todos, newTodo])
+      setTextInput("")
+    }
+    else {
+      Alert.alert("Error", "Please enter a todo!")
+    }
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <View style={styles.header}>
         <Text style={
           {
-            fontWeight: 'bold',
+            fontWeight: "bold",
             fontSize: 20,
             color: COLORS.primary
           }}>Todo App</Text>
-        <Icon name='delete' size={25} color={COLORS.red} />
+        <Icon name="delete" size={25} color={COLORS.red} />
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}
@@ -62,15 +82,20 @@ export default function App() {
       />
       <View style={styles.footer}>
         <View style={styles.inputContainer}>
-          <TextInput placeholder="Add a todo!" style={{ height: 50 }} />
+          <TextInput
+            placeholder="Add a todo!"
+            value={textInput}
+            onChangeText={(text) => setTextInput(text)}
+            style={{ height: 50 }}
+          />
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={addTodo}>
           <View style={styles.iconContainer}>
-            <Icon name='add' size={30} color={COLORS.white} />
+            <Icon name="add" size={30} color={COLORS.white} />
           </View>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </SafeAreaView >
   );
 }
 
@@ -79,17 +104,17 @@ const styles = StyleSheet.create({
   header: {
     paddingTop: 50,
     paddingHorizontal: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
   },
   footer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     color: COLORS.white,
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 20
   },
   inputContainer: {
@@ -108,13 +133,13 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     borderRadius: 25,
     elevation: 40,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center"
   },
   listItem: {
     padding: 20,
     backgroundColor: COLORS.white,
-    flexDirection: 'row',
+    flexDirection: "row",
     elevation: 12,
     borderRadius: 7,
     marginVertical: 10
@@ -123,8 +148,8 @@ const styles = StyleSheet.create({
     height: 25,
     width: 25,
     backgroundColor: COLORS.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginLeft: 5,
     borderRadius: 3
   }
