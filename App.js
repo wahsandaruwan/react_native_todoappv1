@@ -1,10 +1,13 @@
 // Inbuilt components
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, FlatList, Alert } from "react-native";
 
 // Third-party icons
 import Icon from "react-native-vector-icons/MaterialIcons"
+
+// Third-party modules
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 // Custom colors object
 const COLORS = { primary: "#2ecc71", white: "#ffffff", red: "#e74c3c", dark: "#2c3e50" }
@@ -14,11 +17,12 @@ export default function App() {
   const [textInput, setTextInput] = useState("")
 
   // List of todos
-  const [todos, setTodos] = useState([
-    { id: 1, task: "First Todo", completed: true },
-    { id: 2, task: "Second Todo", completed: false },
-    { id: 3, task: "Third Todo", completed: true }
-  ])
+  const [todos, setTodos] = useState([])
+
+  // Save todos in device
+  useEffect(() => {
+    saveTodosToPhone()
+  }, [todos])
 
   // Custom ListItem component
   const ListItem = ({ todo }) => {
@@ -104,6 +108,16 @@ export default function App() {
         text: "No"
       }
     ])
+  }
+
+  // Save todos to user's device
+  const saveTodosToPhone = async (todos) => {
+    try {
+      const stringifyTodos = JSON.stringify(value)
+      await AsyncStorage.setItem("@Storage_Key", stringifyTodos)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (
