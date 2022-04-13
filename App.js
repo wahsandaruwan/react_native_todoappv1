@@ -93,6 +93,19 @@ export default function App() {
     setTodos(newTodos)
   }
 
+  // Function for deleting all todos
+  const deleteAllTodos = () => {
+    Alert.alert("Confirm", "Clear Todos", [
+      {
+        text: "Yes",
+        onPress: () => setTodos([])
+      },
+      {
+        text: "No"
+      }
+    ])
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <View style={styles.header}>
@@ -102,7 +115,7 @@ export default function App() {
             fontSize: 20,
             color: COLORS.primary
           }}>Todo App</Text>
-        <Icon name="delete" size={25} color={COLORS.red} />
+        <Icon name="delete" size={25} color={COLORS.red} onPress={deleteAllTodos} />
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}
