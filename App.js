@@ -33,14 +33,18 @@ export default function App() {
             }
           }>{todo?.task}</Text>
         </View>
-        <TouchableOpacity style={[styles.actionIcon]} onPress={() => toggleTodoComplete(todo?.id)}>
+        <TouchableOpacity
+          style={[styles.actionIcon]}
+          onPress={() => toggleTodoComplete(todo?.id)}>
           {
             todo?.completed && (
               <Icon name="done" size={20} color={COLORS.white} />
             )
           }
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.actionIcon, { backgroundColor: COLORS.red }]}>
+        <TouchableOpacity
+          style={[styles.actionIcon, { backgroundColor: COLORS.red }]}
+          onPress={() => deleteTodo(todo?.id)}>
           <Icon name="delete" size={20} color={COLORS.white} />
         </TouchableOpacity>
       </View >
@@ -56,6 +60,8 @@ export default function App() {
         task: textInput,
         completed: false
       }
+
+      // Add new todo
       setTodos([...todos, newTodo])
       setTextInput("")
     }
@@ -64,7 +70,7 @@ export default function App() {
     }
   }
 
-  // Function for toggle todo complete
+  // Function for toggling todo complete
   const toggleTodoComplete = (todoId) => {
     const newTodos = todos.map((item) => {
       // toggle
@@ -73,6 +79,15 @@ export default function App() {
       }
       return item
     })
+
+    // Set new todos
+    setTodos(newTodos)
+  }
+
+  // Function for deleting a todo
+  const deleteTodo = (todoId) => {
+    // Filter todos
+    const newTodos = todos.filter((item) => item.id !== todoId)
 
     // Set new todos
     setTodos(newTodos)
