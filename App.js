@@ -1,16 +1,23 @@
+// Inbuilt components
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, FlatList } from 'react-native';
+
+// Third-party icons
 import Icon from "react-native-vector-icons/MaterialIcons"
+
+// Custom colors object
 const COLORS = { primary: "#2ecc71", white: "#ffffff", red: "#e74c3c", dark: "#2c3e50" }
 
 export default function App() {
+  // Todo data
   const [todos, setTodos] = useState([
     { id: 1, task: "First Todo", completed: true },
     { id: 2, task: "Second Todo", completed: false },
     { id: 3, task: "Third Todo", completed: true }
   ])
 
+  // Custom ListItem component
   const ListItem = ({ todo }) => {
     return (
       <View style={styles.listItem}>
@@ -67,6 +74,7 @@ export default function App() {
   );
 }
 
+// Custom styling
 const styles = StyleSheet.create({
   header: {
     paddingTop: 50,
