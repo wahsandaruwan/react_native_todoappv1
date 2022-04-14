@@ -5,7 +5,7 @@
 #### Technologies Used
 
 - JavaScript
-- React
+- React-Native
 - Async Storage
 
 #### Features
