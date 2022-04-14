@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "todo_app",
-    "slug": "todo_app",
+    "name": "WahTodoApp",
+    "slug": "WahTodoAppV1",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,6 +20,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.wah.todov1",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
